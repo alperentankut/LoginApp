@@ -1,6 +1,0 @@
-{
-    "plugins": ["@babel/plugin-syntax-import-attributes",
-    "@babel/plugin-proposal-import-attributes-to-assertions"   
-]
-    
-  }

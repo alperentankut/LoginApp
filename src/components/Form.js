@@ -1,21 +1,65 @@
 import React, { useState } from "react";
 import "../styles/form.css";
-import { sendForm } from "../functions/sendFormInfo.js";
+import { db } from "../firebaseSetup/firebase.js";
+import { collection, addDoc } from "firebase/firestore";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 const Form = () => {
   const [nameInfo, setNameInfo] = useState("");
   const [surnameInfo, setSurnameInfo] = useState("");
   const [phoneInfo, setPhoneInfo] = useState("");
   const [emailInfo, setEmailInfo] = useState("");
+
   const data = {
-    name : nameInfo,
-    surname : surnameInfo,
-    phone : phoneInfo,
-    email : emailInfo
-  }
+    name: nameInfo,
+    surname: surnameInfo,
+    phone: phoneInfo,
+    email: emailInfo,
+  };
+
+  const sendData = async (e) => {
+    try {
+      e.preventDefault();
+      const dataReference = collection(db, "user-info");
+      if (
+        data.name !== "" &&
+        data.email !== "" &&
+        data.phone !== "" &&
+        data.surname !== ""
+      ) {
+        await addDoc(dataReference, data);
+
+        let timerInterval;
+        Swal.fire({
+          title: "Kayıt Başarılı",
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            timerInterval = setInterval(() => {}, 100);
+          },
+          willClose: () => {
+            window.location.reload(true);
+          },
+        });
+      } else {
+        const MySwal = withReactContent(Swal);
+
+        MySwal.fire({
+          title: <strong>Lütfen Tüm Alanları Doldurunuz.</strong>,
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="form-container">
-      <form>
+      <form onSubmit={sendData}>
+        <h3 className="title">Kullanıcı Kayıt Paneli</h3>
         <div className="input-area">
           <br></br>
           <input
@@ -60,7 +104,7 @@ const Form = () => {
           ></input>
           <br></br>
           <div className="button-area input-area">
-            <button type="submit" className="btn" onClick={sendForm(data)}>
+            <button type="submit" className="btn">
               Gönder
             </button>
           </div>
