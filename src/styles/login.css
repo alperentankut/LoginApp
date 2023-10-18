@@ -2,12 +2,13 @@
 .login{
     display: flex;
     flex-direction: column;
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
     background-color: purple;
     margin: auto;
     align-items: center;
     border-radius: 10px;
+    justify-content:center;
 }
 .text{
     color: white;
@@ -15,7 +16,7 @@
 }
 
 .username{
-    margin: 30px;
+    margin: 20px;
     height: 25px;
     width: 300px;
     text-align: center;
@@ -34,4 +35,5 @@
 }
 .btn:hover{
     cursor: pointer;
+    background-color: darkcyan;
 }

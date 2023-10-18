@@ -20,32 +20,29 @@ const Login = () => {
     const data = await getDocs(res);
     if (data.size === 0) {
       const MySwal = withReactContent(Swal);
-
-      MySwal.fire({
+        MySwal.fire({
         title: <strong>Kullanıcı adı veya parola hatalı</strong>,
         icon: "error",
       });
     } else {
-      const MySwal = withReactContent(Swal);
-
       let timerInterval;
-        Swal.fire({
-          title: "Giriş Başarılı",
-          timer: 1200,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-            timerInterval = setInterval(() => {
-            }, 100);
-          },
-          
-        });
+      Swal.fire({
+        title: "Giriş Başarılı",
+        timer: 1200,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          timerInterval = setInterval(() => {}, 100);
+        },
+        
+      });
       const navigatePage = () => {
         navigate("/form");
       };
+      
       setTimeout(() => {
         navigatePage();
-      }, 1300); 
+      }, 1300);
     }
   };
 
@@ -57,7 +54,8 @@ const Login = () => {
         placeholder="username"
         onChange={(e) => setUsername(e.target.value)}
       ></input>
-      <input type="password"
+      <input
+        type="password"
         className="password"
         placeholder="password"
         onChange={(e) => setPassword(e.target.value)}
